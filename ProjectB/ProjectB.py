@@ -7,9 +7,9 @@ from mlxtend.frequent_patterns import association_rules
 #数据读取及分析数据提取
 file = open('./订单表.csv')
 data = pd.read_csv(file)
-dataset = data[['客户ID','产品名称']]
+dataset = data[['客户ID', '产品名称']]
 dataset = dataset.drop(dataset[dataset.产品名称 == 'none'].index)
-dataset = dataset.sort_values(by='客户ID',ascending=True)
+dataset = dataset.sort_values(by='客户ID', ascending=True)
 
 ## 采用efficient_apriori工具包
 def Rule1():
@@ -53,9 +53,9 @@ def Rule2():
 	analysis_data=analysis_data.T
 	analysis_data.columns = ['产品名称']
 	#将数据进行hot_encoded编码
-	analysis_data_hot_encoded = analysis_data.drop('产品名称',1).join(analysis_data.产品名称.str.get_dummies('|'))
+	analysis_data_hot_encoded = analysis_data.drop('产品名称', 1).join(analysis_data.产品名称.str.get_dummies('|'))
 	#对数据进行关联分析
-	itemsets = apr(analysis_data_hot_encoded,use_colnames=True, min_support=0.05)
+	itemsets = apr(analysis_data_hot_encoded, use_colnames=True, min_support=0.05)
 	# 按照支持度从大到小进行排序
 	itemsets = itemsets.sort_values(by="support" , ascending=False) 
 	print('-'*20, '频繁项集', '-'*20)
