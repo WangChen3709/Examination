@@ -44,6 +44,7 @@ def lunkuo(train_x):
 	plt.xlabel('k')
 	plt.ylabel('SCS')
 	plt.plot(k_value, sc_scores, '*-')
+	plt.show()
 ### 使用KMeans聚类
 def K_Means(train_x, n_cluster, data):
 	kmeans = KMeans(n_clusters=n_cluster)
@@ -62,19 +63,22 @@ def CengCi(train_x, n_cluster):
 	print(y)
 	linkage_matrix = ward(train_x)
 	dendrogram(linkage_matrix)
+	plt.show()
 def main():
 	#数据读取
 	data = pd.read_csv('./CarPrice_Assignment.csv')
 	train_x = data.iloc[:, 1:]
 	#处理数据
 	train_data = data_normalize(train_x)
-	#选取K值
+	#手肘法选取K值
 	shouzhou(train_data)
+	#轮廓系数法选取K值
 	lunkuo(train_data)
 	#确定K值
 	K_Num = int(input('数据聚类的类数为：'))
-	#KMeans与层次聚类
+	#KMeans聚类
 	K_Means(train_data, K_Num, data)
+	#层次聚类
 	CengCi(train_data, K_Num)
 if __name__ == '__main__':
 	main()
