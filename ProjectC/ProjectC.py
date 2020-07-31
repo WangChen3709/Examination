@@ -44,6 +44,7 @@ def lunkuo(train_x):
 	plt.xlabel('k')
 	plt.ylabel('SCS')
 	plt.plot(k_value, sc_scores, '*-')
+	plt.show()
 ### 使用KMeans聚类
 def K_Means(train_x, n_cluster, data):
 	kmeans = KMeans(n_clusters=n_cluster)
@@ -62,6 +63,7 @@ def CengCi(train_x, n_cluster):
 	print(y)
 	linkage_matrix = ward(train_x)
 	dendrogram(linkage_matrix)
+	plt.show()
 def main():
 	#数据读取
 	data = pd.read_csv('./CarPrice_Assignment.csv')
