@@ -55,6 +55,7 @@ def K_Means(train_x, n_cluster, data):
 	result.rename({0:u'聚类结果'}, axis=1, inplace=True)
 	print(result)
 	# 将结果导出到CSV文件中
+	result = result.sort_values(by='聚类结果', ascending=True)
 	result.to_csv("car_result.csv", index=False, encoding='gbk')
 ### 使用层次聚类
 def CengCi(train_x, n_cluster):
