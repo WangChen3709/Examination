@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #数据规范化
 def data_normalize(train_x):
 	#数据中的字符串数字化
-	str_name = ['CarName','fueltype','aspiration','doornumber','carbody','drivewheel','enginelocation','enginetype','cylindernumber','fuelsystem']
+	str_name = ['CarName', 'fueltype', 'aspiration', 'doornumber', 'carbody', 'drivewheel', 'enginelocation', 'enginetype', 'cylindernumber', 'fuelsystem']
 	for i in range(len(str_name)):
 		le = LabelEncoder()
 		train_x[str_name[i]] = le.fit_transform(train_x[str_name[i]])
@@ -34,29 +34,29 @@ def shouzhou(train_x):
 #轮廓系数
 def lunkuo(train_x):
 	sc_scores = []
-	k_value=[]
-	for k in range(2,50):
+	k_value = []
+	for k in range(2, 50):
 	    kmeans = KMeans(n_clusters=k)
 	    kmeans_model = kmeans.fit(train_x)
-	    sc_score = silhouette_score(train_x,kmeans_model.labels_,metric='euclidean')
+	    sc_score = silhouette_score(train_x, kmeans_model.labels_, metric='euclidean')
 	    sc_scores.append(sc_score)
 	    k_value.append(k)
 	plt.xlabel('k')
 	plt.ylabel('SCS')
-	plt.plot(k_value,sc_scores,'*-')
+	plt.plot(k_value, sc_scores, '*-')
 ### 使用KMeans聚类
-def K_Means(train_x,n_cluster,data):
+def K_Means(train_x, n_cluster, data):
 	kmeans = KMeans(n_clusters=n_cluster)
 	kmeans.fit(train_x)
 	predict_y = kmeans.predict(train_x)
 	# 合并聚类结果，插入到原数据中
-	result = pd.concat((data,pd.DataFrame(predict_y)),axis=1)
-	result.rename({0:u'聚类结果'},axis=1,inplace=True)
+	result = pd.concat((data, pd.DataFrame(predict_y)), axis=1)
+	result.rename({0:u'聚类结果'}, axis=1, inplace=True)
 	print(result)
 	# 将结果导出到CSV文件中
-	result.to_csv("car_result.csv",index=False,encoding='gbk')
+	result.to_csv("car_result.csv", index=False, encoding='gbk')
 ### 使用层次聚类
-def CengCi(train_x,n_cluster):
+def CengCi(train_x, n_cluster):
 	model = AgglomerativeClustering(linkage='ward', n_clusters=n_cluster)
 	y = model.fit_predict(train_x)
 	print(y)
@@ -65,7 +65,7 @@ def CengCi(train_x,n_cluster):
 def main():
 	#数据读取
 	data = pd.read_csv('./CarPrice_Assignment.csv')
-	train_x = data.iloc[:,1:]
+	train_x = data.iloc[:, 1:]
 	#处理数据
 	train_data = data_normalize(train_x)
 	#选取K值
@@ -74,7 +74,7 @@ def main():
 	#确定K值
 	K_Num = int(input('数据聚类的类数为：'))
 	#KMeans与层次聚类
-	K_Means(train_data,K_Num,data)
-	CengCi(train_data,K_Num)
+	K_Means(train_data, K_Num, data)
+	CengCi(train_data, K_Num)
 if __name__ == '__main__':
 	main()
