@@ -13,7 +13,6 @@ dataset = dataset.sort_values(by='客户ID',ascending=True)
 
 ## 采用efficient_apriori工具包
 def Rule1():
-
 	start = time.time()
 	#设置索引
 	order_series = dataset.set_index('客户ID')['产品名称']
@@ -37,7 +36,6 @@ def Rule1():
 
 #采用mlxtend.frequent_patterns工具包
 def Rule2():
-
 	start = time.time()
 	#将产品名称数据按客户ID分类且去重后放入字典中
 	order_series = dataset.set_index('客户ID')['产品名称']
